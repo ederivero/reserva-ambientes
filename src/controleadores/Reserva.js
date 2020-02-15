@@ -95,6 +95,7 @@ const getReservaByFechas = (req,res)=>{
                 res_fechfin: {[Op.between]: [fecha_inicio,fecha_fin]}
             }]}
     }).then(reservas=>{
+        //validamos que la longitud de reservas sea diferente a 0
         if (reservas.length!=0){
             res.status(200).json({
                 ok:true,
@@ -109,8 +110,17 @@ const getReservaByFechas = (req,res)=>{
         }
     })
 }
+const getReservas=(req,res)=>{
+    Reserva.findAll().then(reservas=>{
+        res.status(200).json({
+            ok: true,
+            contenido: reservas
+        })
+    })
+}
 module.exports ={
     postReserva,
     validarReserva,
     getReservaByFechas,
+    getReservas
 }
